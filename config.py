@@ -1,11 +1,10 @@
 # Copyright (c) 2010 Aldo Cortesi
 # Copyright (c) 2010, 2014 dequis
-# Copyright (c) 2012 Randall Ma
-# Copyright (c) 2012-2014 Tycho Andersen
+# Copyright (c) 2012 Ranendall Ma
+# Copyright (c) 2012-2014 Tycho Anders
 # Copyright (c) 2012 Craig Barnes
 # Copyright (c) 2013 horsik
 # Copyright (c) 2013 Tao Sauvage
-#e
 # Peermission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -97,7 +96,7 @@ for i in range(len(group_names)):
         Key([mod, "shift"], group_names[i], lazy.window.togroup(group_names[i], switch_group=True), desc="Switch to & move focused window to group {}".format(group_names[i]),),
     ])
 
-system_font = "sans"
+system_font = "MartianMono Nerd Font"
 font_size = 10
 panel_size = 18
 gap_size = 3
@@ -210,6 +209,25 @@ wl_input_rules = None
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
 # AUTO START PROGRAMS
+def run_once(folder, files='*'):
+    source_dir = pathlib.Path(folder)
+    if not source_dir.is_dir():
+        return
+    backup_dir = pathlib.Path(source_dir / 'BACKUP')
+    try:
+        pathlib.Path.mkdir(backup_dir, exist_ok=True)
+    except FileNotFoundError:
+        return
+    list_of_files = source_dir.glob(files)
+    for file in list_of_files:
+        if file.is_file():
+            proc = subprocess.Popen([file.as_posix()],
+                                    stdin=None, stdout=None, stderr=None,
+                                    close_fds=True)
+            time.sleep(0.2)
+            new_filename = str(time.time()) + '_' + file.name
+            file.rename(backup_dir.as_posix() + '/' + new_filename)
+
 @hook.subscribe.startup_once
-def autostart():
-    lazy.spawn("nitrogen --restore")
+def autostart_once():
+    run_once('/home/USER/path/to/dir/RUNONCE')
