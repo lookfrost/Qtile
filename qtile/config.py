@@ -72,6 +72,7 @@ keys = [
     Key([mod], "y", lazy.window.toggle_floating()),  # Toggle floating on the focused window
     Key([mod], "q", lazy.spawn("rofi -show drun -show-icons"), desc="Spawn a command using a prompt widget"),
     Key([mod], "s", lazy.spawn("flameshot gui"), desc="Spawn a command using a prompt widget"),
+    Key([mod], "m", lazy.spawn("cherrytree"), desc="Spawn a command using a prompt widget"),
 ]
 
 group_default_layout = "columns"
@@ -147,6 +148,7 @@ screens = [
                 widget.CurrentLayoutIcon(),
                 widget.GroupBox(disable_drag=True),
                 widget.WindowName(),
+                widget.Wallpaper(directory= '/home/lookf/wallpapers', background='#080808', label='wallpaper'),
                 widget.Systray(),
                 widget.Volume(mouse_callbacks={'Button1': lazy.spawn("pavucontrol") }),
                 widget.Clock(format="%d-%m-%Y %a %H:%M "),
@@ -161,10 +163,10 @@ screens = [
         top=bar.Gap(gap_size),
         
         # set static wallpaper
-        wallpaper= '/home/lookf/wallpapers/ll.jpg',
+        # wallpaper= '/home/lookf/wallpapers/ll1.jpg',
         
         # set wallpaper mode to 'fill' or 'stretch'
-        wallpaper_mode= 'fill',
+        # wallpaper_mode= 'fill',
     ),
 ]
 
